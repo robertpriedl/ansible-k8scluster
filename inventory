@@ -1,0 +1,8 @@
+[k8smaster]
+kubem-032 ansible_host=10.10.11.156
+[k8sworker]
+kubew-033 ansible_host=10.10.11.151
+
+[ubuntuserver]
+kubew-033 ansible_host=10.10.11.151
+kubem-032 ansible_host=10.10.11.156
