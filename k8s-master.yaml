@@ -1,12 +1,20 @@
 ---
 - hosts: k8smaster
-  become: yes
+  become: true
   tasks:
-    - name: initialize the cluster
+    - name: Check if .kube directory exist
+      ansible.builtin.stat:
+        path: /home/localadmin/.kube
+      register: kubeDir
+
+    - name: Initialize the cluster
       ansible.builtin.shell: kubeadm init --pod-network-cidr=10.244.0.0/16
+      become: true
+      become_user: localadmin
       args:
         chdir: $HOME
         creates: cluster_initialized.txt
+      when: not kubeDir.stat.exists
 
     - name: Create .kube directory
       become: true
@@ -14,7 +22,7 @@
       ansible.builtin.file:
         path: $HOME/.kube
         state: directory
-        mode: 0755
+        mode: '0755'
 
     - name: Copies admin.conf to user's kube config
       ansible.builtin.copy:
@@ -26,11 +34,9 @@
     - name: Install Pod network
       become: true
       become_user: localadmin
-      kubernetes.core.k8s:
-        state: present
-        src: https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/calico.yaml
-        validate_certs: false
-        force: true
+      shell: kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/calico.yaml
+      args:
+        chdir: $HOME
 
     - name: Get the token for joining the worker nodes
       become: true
