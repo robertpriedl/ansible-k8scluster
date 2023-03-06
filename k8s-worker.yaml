@@ -1,4 +1,4 @@
-- hosts: workr
+- hosts: k8sworker
   become: yes
   gather_facts: yes
 
