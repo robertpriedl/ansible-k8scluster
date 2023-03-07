@@ -6,9 +6,13 @@
       ansible.builtin.stat:
         path: /home/localadmin/.kube
       register: kubeDir
+    
+    - name: Debug kubeDir
+      ansible.builtin.debug:
+        msg: "{{ kubeDir.stat }}"
 
     - name: Initialize the cluster
-      ansible.builtin.shell: kubeadm init --pod-network-cidr=10.244.0.0/16
+      ansible.builtin.shell: sudo kubeadm init --pod-network-cidr=10.244.0.0/16
       become: true
       become_user: localadmin
       args:

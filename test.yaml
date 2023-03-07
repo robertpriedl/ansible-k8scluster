@@ -1,0 +1,12 @@
+- hosts: k8smaster
+  become: true
+  tasks:
+    - name: Check if .kube directory exist
+      ansible.builtin.stat:
+        path: /home/localadmin/.kube
+      register: kubeDir
+
+    - name: Debug kubeDir
+      ansible.builtin.debug:
+        msg: "{{ kubeDir.stat }}"
+      when: not kubeDir.stat.exists

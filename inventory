@@ -1,8 +1,9 @@
 [k8smaster]
-kubem-032 ansible_host=10.10.11.156
+kubem-057 ansible_host=10.10.11.160
 [k8sworker]
-kubew-033 ansible_host=10.10.11.151
-
+kubew-059 ansible_host=10.10.11.151
+kubew-058 ansible_host=10.10.11.154
 [ubuntuserver]
-kubew-033 ansible_host=10.10.11.151
-kubem-032 ansible_host=10.10.11.156
+kubew-059 ansible_host=10.10.11.151
+kubew-058 ansible_host=10.10.11.154
+kubem-057 ansible_host=10.10.11.160

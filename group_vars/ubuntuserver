@@ -1,0 +1,2 @@
+ansible_user: localadmin
+ansible_password: Pa$$w0rd
